@@ -1,6 +1,8 @@
 __author__ = 'verbalist'
 
 import os
+import shutil
+
 def init():
 
     os.mkdir('controllers')
@@ -18,14 +20,14 @@ def init():
 
     print('init success')
 
-def remove(name=None):
-    if name is None:
+def remove(name):
+    if name == 'all':
         name = ''
 
-    os.remove('controllers/'+ name)
-    os.remove('models/'+ name)
-    os.remove('routes/'+ name)
-    os.remove('views/'+ name)
+    shutil.rmtree('controllers/'+ name)
+    shutil.rmtree('models/'+ name)
+    shutil.rmtree('routes/'+ name)
+    shutil.rmtree('views/'+ name)
 
     print('remove {0} completed'.format(name))
 
