@@ -48,6 +48,8 @@ def default():
     f.close()
     f = open('default_routes.py', 'w')
     f.close()
+    f = open('default_views.py', 'w')
+    f.close()
 
     print('default create')
 
@@ -59,7 +61,7 @@ def create_rest(name, default=False):
     if default:
         with open('default_controller.py') as d_c:
             for line in d_c:
-                f.writelines(line)
+                f.writelines(line.replace("{PATH}", name + '/'))
     f.close()
 
     #models
@@ -68,7 +70,7 @@ def create_rest(name, default=False):
     if default:
         with open('default_models.py') as d_c:
             for line in d_c:
-                f.writelines(line)
+                f.writelines(line.replace("{PATH}", name + '/'))
     f.close()
 
     #routes
@@ -77,34 +79,40 @@ def create_rest(name, default=False):
     if default:
         with open('default_routes.py') as d_c:
             for line in d_c:
-                f.writelines(line)
+                f.writelines(line.replace("{PATH}", name + '/'))
     f.close()
 
     #views
     os.mkdir('views/' + name)
-    f = open('views/' + name + '/create.py', 'w')
+    f = open('views/' + name + '.py', 'w')
     if default:
-        with open('default_create.py') as d_c:
+        with open('default_views.py') as d_c:
             for line in d_c:
-                f.writelines(line)
+                f.writelines(line.replace("{PATH}", name + '/'))
     f.close()
-    f = open('views/' + name + '/show.py', 'w')
-    if default:
-        with open('default_show.py') as d_c:
-            for line in d_c:
-                f.writelines(line)
-    f.close()
-    f = open('views/' + name + '/update.py', 'w')
-    if default:
-        with open('default_update.py') as d_c:
-            for line in d_c:
-                f.writelines(line)
-    f.close()
-    f = open('views/' + name + '/delete.py', 'w')
-    if default:
-        with open('default_delete.py') as d_c:
-            for line in d_c:
-                f.writelines(line)
-    f.close()
+    # f = open('views/' + name + '/create.py', 'w')
+    # if default:
+    #     with open('default_create.py') as d_c:
+    #         for line in d_c:
+    #             f.writelines(line)
+    # f.close()
+    # f = open('views/' + name + '/show.py', 'w')
+    # if default:
+    #     with open('default_show.py') as d_c:
+    #         for line in d_c:
+    #             f.writelines(line)
+    # f.close()
+    # f = open('views/' + name + '/update.py', 'w')
+    # if default:
+    #     with open('default_update.py') as d_c:
+    #         for line in d_c:
+    #             f.writelines(line)
+    # f.close()
+    # f = open('views/' + name + '/delete.py', 'w')
+    # if default:
+    #     with open('default_delete.py') as d_c:
+    #         for line in d_c:
+    #             f.writelines(line)
+    # f.close()
 
     print('create base tree with name: {0}'.format(name))
