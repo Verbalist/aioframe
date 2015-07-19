@@ -27,10 +27,12 @@ def delete(request):
 @asyncio.coroutine
 def update(request):
     args = dict(parse_qsl(request._query_string))
-    yield from controllers.{PATH}.update(request._match_info['id'], **args)
+    data = yield from controllers.{PATH}.update(request._match_info['id'], **args)
+    return web.Response(body=json.dumps(data).encode('utf-8'))
 
 #POST
 @asyncio.coroutine
 def create(request):
     args = dict(parse_qsl(request._query_string))
-    yield from controllers.{PATH}.create(**args)
+    data = yield from controllers.{PATH}.create(**args)
+    return web.Response(body=json.dumps(data).encode('utf-8'))

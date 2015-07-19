@@ -68,39 +68,39 @@ def default():
 def create_rest(name, default=False):
 
     #controllers
-    os.mkdir('controllers/' + name)
-    f = open('controllers/' + name + '/' + name + '.py', 'w')
+    # os.mkdir('controllers/' + name)
+    f = open('controllers/' + name + '.py', 'w')
     if default:
         with open('default_controllers.py') as d_c:
             for line in d_c:
-                f.writelines(line.replace("{PATH}", name + '/'))
+                f.writelines(line.replace("{PATH}", name))
     f.close()
 
     #models
-    os.mkdir('models/' + name)
-    f = open('models/' + name + '/' + name + '.py', 'w')
+    # os.mkdir('models/' + name)
+    f = open('models/' + name + '.py', 'w')
     if default:
         with open('default_models.py') as d_c:
             for line in d_c:
-                f.writelines(line.replace("{PATH}", name + '/'))
+                f.writelines(line.replace("{PATH}", name))
     f.close()
 
     #routes
-    os.mkdir('routes/' + name)
-    f = open('routes/' + name + '/' + name + '.py', 'w')
+    # os.mkdir('routes/' + name)
+    f = open('routes/' + name + '.py', 'w')
     if default:
         with open('default_routes.py') as d_c:
             for line in d_c:
-                f.writelines(line.replace("{PATH}", name + '/'))
+                f.writelines(line.replace("{PATH}", name))
     f.close()
 
     #views
-    os.mkdir('views/' + name)
+    # os.mkdir('views/' + name)
     f = open('views/' + name + '.py', 'w')
     if default:
         with open('default_views.py') as d_c:
             for line in d_c:
-                f.writelines(line.replace("{PATH}", name + '/'))
+                f.writelines(line.replace("{PATH}", name))
     f.close()
     # f = open('views/' + name + '/create.py', 'w')
     # if default:
