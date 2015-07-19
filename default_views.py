@@ -1,20 +1,36 @@
-from urls import url
-from aiohttp import web
 import asyncio
-import json
+from urllib.parse import parse_qsl
+from aiohttp import web
 import controllers.{PATH}
+import json
 
+#GET
 @asyncio.coroutine
-def main(request):
-    _query_string = yield from request._query_string
+def show_all(request):
+    args = dict(parse_qsl(request._query_string))
+    data = yield from controllers.{PATH}.show_all(**args)
+    return web.Response(body=json.dumps(data).encode('utf-8'))
 
+#GET
+@asyncio.coroutine
+def show(request):
+    # args = dict(parse_qsl(request._query_string))
+    data = yield from controllers.{PATH}.show(request._match_info['id'])
+    return web.Response(body=json.dumps(data).encode('utf-8'))
 
-    response = json.dumps()
-    return web.Response(body = controllers.{PATH}.get_all())
+#POST
+@asyncio.coroutine
+def delete(request):
+    yield from controllers.{PATH}.delete(request._match_info['id'])
 
+#POST
+@asyncio.coroutine
+def update(request):
+    args = dict(parse_qsl(request._query_string))
+    yield from controllers.{PATH}.update(request._match_info['id'], **args)
 
-urlpatterns = [url('GET',r'/{PATH}', views.{PATH}.main),
-               url('GET',r'/{PATH}update/{id}', views.{PATH}.update),
-               url('GET',r'/{PATH}create/{id}', views.{PATH}.create),
-               url('GET',r'/{PATH}delete/{id}', views.{PATH}.delete),
-               url('GET',r'/{PATH}show/{id}', views.{PATH}.show)]
+#POST
+@asyncio.coroutine
+def create(request):
+    args = dict(parse_qsl(request._query_string))
+    yield from controllers.{PATH}.create(**args)

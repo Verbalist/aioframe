@@ -7,15 +7,27 @@ def init():
 
     os.mkdir('controllers')
     f = open('controllers/main.py', 'w')
+    with open('controllers_main.py') as d_c:
+        for line in d_c:
+            f.writelines(line)
     f.close()
     os.mkdir('models')
     f = open('models/main.py', 'w')
+    with open('models_main.py') as d_c:
+        for line in d_c:
+            f.writelines(line)
     f.close()
     os.mkdir('views')
     f = open('views/main.py', 'w')
+    with open('views_main.py') as d_c:
+        for line in d_c:
+            f.writelines(line)
     f.close()
     os.mkdir('routes')
     f = open('routes/main.py', 'w')
+    with open('routes_main.py') as d_c:
+        for line in d_c:
+            f.writelines(line)
     f.close()
 
     print('init success')
@@ -42,7 +54,7 @@ def default():
     f.close()
     f = open('default_show.py', 'w')
     f.close()
-    f = open('default_controller.py', 'w')
+    f = open('default_controllers.py', 'w')
     f.close()
     f = open('default_models.py', 'w')
     f.close()
@@ -59,7 +71,7 @@ def create_rest(name, default=False):
     os.mkdir('controllers/' + name)
     f = open('controllers/' + name + '/' + name + '.py', 'w')
     if default:
-        with open('default_controller.py') as d_c:
+        with open('default_controllers.py') as d_c:
             for line in d_c:
                 f.writelines(line.replace("{PATH}", name + '/'))
     f.close()

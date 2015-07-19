@@ -1,8 +1,9 @@
 from urls import url
 import views.{PATH}
+import routes.main
 
-urlpatterns = [url('GET',r'/{PATH}', views.{PATH}.main),
-               url('GET',r'/{PATH}update/{id}', views.{PATH}.update),
-               url('GET',r'/{PATH}create/', views.{PATH}.create),
-               url('GET',r'/{PATH}delete/{id}', views.{PATH}.delete),
-               url('GET',r'/{PATH}show/{id}', views.{PATH}.show)]
+urlpatterns = [url('GET',r'/{PATH}/', views.{PATH}.show_all),
+               url('POST',r'/{PATH}/update/{id}', views.{PATH}.update),
+               url('POST',r'/{PATH}/create/', views.{PATH}.create),
+               url('POST',r'/{PATH}/delete/{id}', views.{PATH}.delete),
+               url('GET',r'/{PATH}/show/{id}', views.{PATH}.show)]
