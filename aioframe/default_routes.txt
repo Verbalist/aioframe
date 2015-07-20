@@ -1,6 +1,5 @@
-from urls import url
 import views.{PATH}
-import routes.main
+from routes.main import *
 
 urlpatterns = [url('GET',r'/{PATH}/', views.{PATH}.show_all),
                url('POST',r'/{PATH}/update/{id}', views.{PATH}.update),

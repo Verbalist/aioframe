@@ -1,5 +1,5 @@
 import models.{PATH}
-import controllers.main
+from controllers.main import *
 import asyncio
 
 @asyncio.coroutine

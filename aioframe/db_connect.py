@@ -54,15 +54,16 @@ class PostgresStorage:
         with (yield from self.cursor()) as cur:
             res = yield from cur.mogrify(query, args)
         return res
-
 # @asyncio.coroutine
 # def get_user(pool):
 #     with (yield from pool.cursor()) as cur:
 #         yield from cur.execute("SELECT * from trader where id = 7968", (yield))
 #         ret = yield from cur.fetchone()
 
-db_config = {}
-with open('config.txt', 'r') as config:
-    for row in config:
-        db_config[row.split('=')[0]] = row.split('=')[1].strip('\n')
-db = PostgresStorage(db_config)
+def get_db(path_to_config):
+    db_config = {}
+    with open(path_to_config, 'r') as config:
+        for row in config:
+            db_config[row.split('=')[0]] = row.split('=')[1].strip('\n')
+    db = PostgresStorage(db_config)
+    return db

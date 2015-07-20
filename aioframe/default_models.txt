@@ -1,7 +1,4 @@
-from db_connect import db
-import models.main
-import asyncio
-
+from models.main import *
 
 @asyncio.coroutine
 def show_all(limit=20, offset=0, sort='', **kwargs):
