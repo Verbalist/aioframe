@@ -44,11 +44,32 @@ def remove(name, path):
     print('remove {0} completed'.format(name))
 
 
+# def default(path):
+#
+#     f = open(path + 'default_create.py', 'w')
+#     f.close()
+#     f = open(path + 'default_delete.py', 'w')
+#     f.close()
+#     f = open(path + 'default_update.py', 'w')
+#     f.close()
+#     f = open(path + 'default_show.py', 'w')
+#     f.close()
+#     f = open(path + 'default_controllers.txt', 'w')
+#     f.close()
+#     f = open(path + 'default_models.txt', 'w')
+#     f.close()
+#     f = open(path + 'default_routes.txt', 'w')
+#     f.close()
+#     f = open(path + 'default_views.txt', 'w')
+#     f.close()
+#
+#     print(path + 'default create')
 
 def create_rest(name, path, default=True):
 
     #controllers
-    f = open(path + 'controllers/' + name + '.py', 'w')
+    # os.mkdir(path + 'controllers/' + name)
+    f = open(path + 'controllers/' + name + '.txt', 'w')
     if default:
         with open(path + 'default_controllers.txt') as d_c:
             for line in d_c:
@@ -56,7 +77,8 @@ def create_rest(name, path, default=True):
     f.close()
 
     #models
-    f = open(path + 'models/' + name + '.py', 'w')
+    # os.mkdir(path + 'models/' + name)
+    f = open(path + 'models/' + name + '.txt', 'w')
     if default:
         with open(path + 'default_models.txt') as d_c:
             for line in d_c:
@@ -64,7 +86,8 @@ def create_rest(name, path, default=True):
     f.close()
 
     #routes
-    f = open(path + 'routes/' + name + '.py', 'w')
+    # os.mkdir(path + 'routes/' + name)
+    f = open(path + 'routes/' + name + '.txt', 'w')
     if default:
         with open(path + 'default_routes.txt') as d_c:
             for line in d_c:
@@ -72,12 +95,36 @@ def create_rest(name, path, default=True):
     f.close()
 
     #views
-    f = open(path + 'views/' + name + '.py', 'w')
+    # os.mkdir(path + 'views/' + name)
+    f = open(path + 'views/' + name + '.txt', 'w')
     if default:
         with open(path + 'default_views.txt') as d_c:
             for line in d_c:
                 f.writelines(line.replace("{PATH}", name))
     f.close()
-
+    # f = open(path + 'views/' + name + '/create.py', 'w')
+    # if default:
+    #     with open(path + 'default_create.py') as d_c:
+    #         for line in d_c:
+    #             f.writelines(line)
+    # f.close()
+    # f = open(path + 'views/' + name + '/show.py', 'w')
+    # if default:
+    #     with open(path + 'default_show.py') as d_c:
+    #         for line in d_c:
+    #             f.writelines(line)
+    # f.close()
+    # f = open(path + 'views/' + name + '/update.py', 'w')
+    # if default:
+    #     with open(path + 'default_update.py') as d_c:
+    #         for line in d_c:
+    #             f.writelines(line)
+    # f.close()
+    # f = open(path + 'views/' + name + '/delete.py', 'w')
+    # if default:
+    #     with open(path + 'default_delete.py') as d_c:
+    #         for line in d_c:
+    #             f.writelines(line)
+    # f.close()
 
     print('create base tree with name: {0}'.format(name))

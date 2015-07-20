@@ -1,5 +1,4 @@
 __author__ = 'verbalist'
-import asyncio
 class url(object):
 
     def __init__(self, type_query, pattern, func):

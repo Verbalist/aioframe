@@ -1,0 +1,7 @@
+dbname=test_data
+user=postgres
+password=1111
+host=localhost
+port=5432
+application_name=web_server
+autocommit=True

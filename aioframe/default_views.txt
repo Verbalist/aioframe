@@ -3,6 +3,7 @@ from aiohttp import web
 import controllers.{PATH}
 import json
 from views.main import *
+
 #GET
 @asyncio.coroutine
 def show_all(request):

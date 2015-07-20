@@ -1,6 +1,5 @@
 import models.{PATH}
 from controllers.main import *
-import asyncio
 
 @asyncio.coroutine
 def delete(_id):
