@@ -1,1 +1,1 @@
-__author__ = 'verbalist'
+from core.project import Project as project
