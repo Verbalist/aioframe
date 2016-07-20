@@ -1,4 +1,4 @@
-from core.object import BaseObject
+from aioframe.core.object import BaseObject
 
 
 class Project(BaseObject):

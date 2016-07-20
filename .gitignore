@@ -1,3 +1,9 @@
 /build
 /config.txt
 /.idea
+/aioframe.egg-info/
+aioframe/__pycache__/
+dist/
+aioframe/core/__pycache__/
+aioframe/core/command/__pycache__/
+aioframe/core/project/__pycache__/
