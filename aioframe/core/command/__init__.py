@@ -1,10 +1,8 @@
 import sys
 import os
-from aioframe.core.command.manuals import console_help
+from aioframe.core.command.manuals import console_help, bad_command, bad_object, bad_name
 import aioframe.core
-
-COMMAND = ('create', 'remove')
-OBJECT = ('project', 'container', 'block', 'microservice')
+from aioframe.core.command.consts import *
 
 
 class CommandProcess(object):
@@ -21,17 +19,15 @@ class CommandProcess(object):
         self.command, self.object, self.name = self.argv
 
         if self.command not in COMMAND:
-            message = """failed command: %s\n\nAVAILABLE COMMANDS:\n\t%s""" % (self.command, '\n\t'.join(COMMAND))
-            print(message)
+            print(bad_command.format(self.command))
             return
 
         if self.object not in OBJECT:
-            message = """failed object: %s\n\nAVAILABLE OBJECTS:\n\t%s""" % (self.object, '\n\t'.join(OBJECT))
-            print(message)
+            print(bad_object.format(self.object))
             return
 
         if self.name in os.listdir(self.path):
-            print('failed name: %s\nThis name is not available' % self.name)
+            print(bad_name.format(self.name))
             return
 
         obj = getattr(aioframe.core, self.object)(self.name)
@@ -40,22 +36,4 @@ class CommandProcess(object):
 
 def process_command():
     cp = CommandProcess()
-
-if __name__ == '__main__':
-    sys.argv = ('/aioframe', 'create', 'project', 'test')
-    process_command()
-
-    sys.argv = ('/aioframe', 'remove', 'project', 'test')
-    process_command()
-
-    sys.argv = ('/aioframe', 'rmove', 'project', 'test')
-    process_command()
-
-    sys.argv = ('/aioframe', 'remove', 'prject', 'test')
-    process_command()
-
-    with open('/var/www/test_exist', 'w') as f:
-        f.write('test_exist')
-    sys.argv = ('/aioframe', 'remove', 'project', 'test_exist')
-    process_command()
 
