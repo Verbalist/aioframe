@@ -95,10 +95,10 @@ class ObjectCursor(BaseCursor):
             else:
                 # наркомания с созданием модели
                 _class = type(name, (self.Entity,), {col.name: None for col in self.cursor.description})
-                path = '/'.join(inspect.stack()[1][1].split('/')[:-1])
+                path = '/'.join(inspect.stack()[3][1].split('/')[:-1])
                 if 'm.py' not in os.listdir(path):
                     with open(os.path.join(path, 'm.py'), 'w') as f:
-                        f.write("""class {name}(object):\n\t{attrs}""".format(name=name, attrs='\n\t'.join([col.name + ' = None'
+                        f.write("""class {name}(object):\n    {attrs}""".format(name=name, attrs='\n    '.join([col.name + ' = None'
                                                                                                   for col in self.cursor.description])))
             return _class(**{self.cursor.description[i].name: col for i, col in enumerate(res[0])})
         else:

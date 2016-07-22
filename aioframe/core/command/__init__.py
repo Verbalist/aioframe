@@ -30,7 +30,7 @@ class CommandProcess(object):
             print(bad_name.format(self.name))
             return
 
-        obj = getattr(aioframe.core, self.object)(self.name)
+        obj = getattr(aioframe.core, self.object)(self.name, self.path)
         getattr(obj, self.command)()
 
 

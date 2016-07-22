@@ -1,4 +1,3 @@
-__author__ = 'verbalist'
 class url(object):
 
     def __init__(self, type_query, pattern, func):

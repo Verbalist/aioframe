@@ -1,5 +1,3 @@
-__author__ = 'verbalist'
-
 import asyncio
 from aiopg.pool import create_pool
 
