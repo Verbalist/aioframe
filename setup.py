@@ -14,5 +14,5 @@ setup(
     download_url='https://github.com/Verbalist/aioframe/archive/master.zip',
     keywords=['asyncio', 'framework', 'web_server', 'async'],
     classifiers=["Programming Language :: Python 3"],
-    long_description='easy framework on asyncio without orm'
+    long_description='easy framework on asyncio without orm', requires=['docker-py']
 )
