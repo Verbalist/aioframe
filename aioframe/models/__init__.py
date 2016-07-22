@@ -1,8 +1,10 @@
 import abc
+import os
 import random
 import time
 import traceback
 from collections import Iterable
+import inspect
 
 
 class BaseModel(object):
@@ -89,8 +91,15 @@ class ObjectCursor(BaseCursor):
         if len(res) == 1:
             if name is None:
                 name = 'new' + str(random.randint(0, 15))
-
-            _class = type(name, (self.Entity, ), {col.name: None for col in self.cursor.description})
+                _class = type(name, (self.Entity,), {col.name: None for col in self.cursor.description})
+            else:
+                # наркомания с созданием модели
+                _class = type(name, (self.Entity,), {col.name: None for col in self.cursor.description})
+                path = '/'.join(inspect.stack()[1][1].split('/')[:-1])
+                if 'm.py' not in os.listdir(path):
+                    with open(os.path.join(path, 'm.py'), 'w') as f:
+                        f.write("""class {name}(object):\n\t{attrs}""".format(name=name, attrs='\n\t'.join([col.name + ' = None'
+                                                                                                  for col in self.cursor.description])))
             return _class(**{self.cursor.description[i].name: col for i, col in enumerate(res[0])})
         else:
             _class = type(name, (self.Entity,), {col.name: None for col in self.cursor.description})
@@ -144,11 +153,11 @@ class Model(object):
         self.dsn = dsn
 
     @Driver.check_cursor
-    def query(self, query_string, args=()):
+    def query(self, query_string, args=(), name=None):
         if not isinstance(args, Iterable):
             args = (args, )
         self.cursor.execute(query_string, args)
-        return self.cursor.fetchall()
+        return self.cursor.fetchall(name)
 
     @Driver.check_cursor
     def execute(self, query_string, args=()):
@@ -175,12 +184,8 @@ if __name__ == '__main__':
 
         import psycopg2
         d = Model(psycopg2, {'database': 'test', 'user': 'test', 'host': container_ip, 'password': 'test'})
-        _c = d.query('select %s as vasa, %s as petya', (1, 1))
-        print(_c.__dict__)
-        print(id(d.cursor))
-        d.cursor.close()
-        print(d.query('select 1 as vasa'))
-        print(id(d.cursor))
+        _c = d.query('select %s as vasa, %s as petya', (1, 1), name='A1')
+
     except Exception as e:
         for x in traceback.format_tb(e.__traceback__): print(x)
     finally:
