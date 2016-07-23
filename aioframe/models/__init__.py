@@ -13,7 +13,7 @@ class BaseModel(object):
         pass
 
 
-class SelectedModel(object):
+class RawQueryModel(object):
 
     objects = []
 
@@ -96,10 +96,17 @@ class ObjectCursor(BaseCursor):
                 # наркомания с созданием модели
                 _class = type(name, (self.Entity,), {col.name: None for col in self.cursor.description})
                 path = '/'.join(inspect.stack()[3][1].split('/')[:-1])
-                if 'm.py' not in os.listdir(path):
-                    with open(os.path.join(path, 'm.py'), 'w') as f:
-                        f.write("""class {name}(object):\n    {attrs}""".format(name=name, attrs='\n    '.join([col.name + ' = None'
-                                                                                                  for col in self.cursor.description])))
+                if 'models.py' not in os.listdir(path):
+                    with open(os.path.join(path, 'models.py'), 'w') as f:
+                        f.write('from aioframe.models import RawQueryModel\n')
+
+                with open(os.path.join(path, 'models.py'), 'r') as r:
+                    if r.read().find('class %s' % name) == -1:
+                        with open(os.path.join(path, 'models.py'), 'a') as f:
+                            f.write("""\n\nclass {name}(RawQueryModel):\n\n    {attrs}\n""".format(name=name,
+                                attrs='\n    '.join([col.name + ' = ' + str(col.type_code)
+                                                     for col in self.cursor.description])))
+                 # конец наркомании
             return _class(**{self.cursor.description[i].name: col for i, col in enumerate(res[0])})
         else:
             _class = type(name, (self.Entity,), {col.name: None for col in self.cursor.description})
