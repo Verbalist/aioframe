@@ -2,27 +2,20 @@ import json
 import os
 import shutil
 
-import yaml
+import time
 from aioframe.core.object import BaseObject
 from docker import Client as DC
+
+from aioframe.core.settings import Settings
 
 
 class Project(BaseObject):
 
     def __init__(self, name, _path):
         self.name = name
-        self.path = _path
+        self.path = os.path.join(_path, name)
         os.chdir(_path)
         self.cli = DC(base_url='unix:///var/run/docker.sock')
-
-        # container = cli.create_container(image='test_db_aioframe')
-        # container_id = container.get('Id')
-        # cli.start(container=container_id)
-        # info = cli.inspect_container(container=container_id)
-        # container_ip = info['NetworkSettings']['IPAddress']
-        # time.sleep(2)  # wait docker container restart postgresql
-        # print('docker start')
-        # print(_path)
 
     def create(self):
         # create project dir
@@ -49,36 +42,37 @@ sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/' /etc/ssh/sshd_c
         for x in [line for line in self.cli.build(path=os.getcwd(), tag='base_dev')]:
             print(json.loads(x.decode())['stream'])
 
-        # create setting
-        yaml.dump({'project': {
+        s = Settings(self.path)
+        s.add({'project': {
             'name': self.name,
             'path': self.path,
             'image': 'base_dev'
         }})
-
+        s.save()
         print('create project with name: %s' % self.name)
 
     def delete(self):
-        shutil.rmtree(os.path.join(self.path, self.name))
+        shutil.rmtree(self.path)
         print('remove project with name: %s' % self.name)
 
     def run(self):
-        pass
-
+        print('run connection api...')
+        print('run database layer...')
+        print('run all container...')
+        s = Settings()
+        for container_name in s.source:
+            if container_name != 'project':
+                print('run container %s' % container_name)
+                c = s.get(container_name)
+                _c = self.cli.create_container(c.get('image'), volumes=[c.get('path')],
+                                               command='python3 {path}/server.py'.format(path=c.get('path')))
+                self.cli.start(container=_c.get('Id'))
+                print('it`s works')
+                time.sleep(3)
+                self.cli.stop(container=_c.get('Id'))
+                print('it`s stop')
 
 if __name__ == '__main__':
-    # cli = DC(base_url='unix:///var/run/docker.sock')
-    # c_1 = cli.create_container(image='test_db_aioframe')
-    # cli.start(container=c_1.get('Id'))
-    # info = cli.inspect_container(container=c_1.get('Id'))
-    # print(info['NetworkSettings']['IPAddress'])
-    # c_2 = cli.create_container(image='test_db_aioframe')
-    # cli.start(container=c_2.get('Id'))
-    # info = cli.inspect_container(container=c_2.get('Id'))
-    # print(info['NetworkSettings']['IPAddress'])
-    #
-    # cli.stop(container=c_1.get('ID'))
-    # cli.stop(container=c_2.get('ID'))
 
     p = Project('test', '/var/www')
     try:

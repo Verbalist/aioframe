@@ -16,6 +16,13 @@ console_help = """
         block
         microservice
             $name
+
+    run
+        project
+        container
+        block
+        microservice
+            $name
 """
 
 bad_command = """failed command: {}\n\nAVAILABLE COMMANDS:\n\t%s""" % '\n\t'.join(COMMAND)

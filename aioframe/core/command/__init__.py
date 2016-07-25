@@ -9,7 +9,6 @@ class CommandProcess(object):
 
     def __init__(self):
         self.path = os.getcwd()
-        self.path = '/var/www'
         self.argv = sys.argv[1:]
 
         if len(self.argv) < 3:
@@ -26,12 +25,15 @@ class CommandProcess(object):
             print(bad_object.format(self.object))
             return
 
-        if self.name in os.listdir(self.path):
+        if self.name in os.listdir(self.path) and self.command == 'create':
             print(bad_name.format(self.name))
             return
 
-        obj = getattr(aioframe.core, self.object)(self.name, self.path)
-        getattr(obj, self.command)()
+        try:
+            obj = getattr(aioframe.core, self.object)(self.name, self.path)
+            getattr(obj, self.command)()
+        except Exception as e:
+            print(e)
 
 
 def process_command():
