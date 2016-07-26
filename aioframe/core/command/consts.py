@@ -1,2 +1,2 @@
-COMMAND = ('create', 'delete', 'run')
+COMMAND = ('create', 'delete', 'run', 'stop')
 OBJECT = ('project', 'container', 'block', 'microservice')

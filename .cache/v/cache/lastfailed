@@ -1,1 +1,3 @@
-{}
+{
+  "tests/test_core/test_command/test_command.py::TestCommandProcess::()::test_process_command_create_project": true
+}

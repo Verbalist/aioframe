@@ -3,7 +3,7 @@ import pytest
 import time
 from docker import Client as DockerClient
 
-from models import Model
+from aioframe.models import Model
 
 
 @pytest.yield_fixture(scope='session')
@@ -20,6 +20,7 @@ def docker():
     yield container_ip
 
     cli.stop(container=container_id)
+    cli.remove_container(container=container_id)
     print('\ndocker stop')
 
 
