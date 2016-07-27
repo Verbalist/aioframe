@@ -74,7 +74,7 @@ class Container(BaseObject):
         self.settings.save()
 
     def stop(self):
-        container_id = self.settings.source.get(self.name).pop('container_id')
+        container_id = self.settings.source.get(self.name).pop('container_id', None)
         if container_id is not None:
             self.cli.stop(container=container_id)
             self.cli.remove_container(container=container_id)
